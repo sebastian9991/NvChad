@@ -1,18 +1,21 @@
 local plugins = {
   {
-    "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "rust-analyzer",
-      },
-    },
-  },
-  {
     "neovim/nvim-lspconfig",
     config = function ()
       require "plugins.configs.lspconfig"
       require "custom.configs.lspconfig"
     end,
+  },
+  {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        "rust-analyzer",
+        "clangd",
+        "clang-format",
+      },
+    },
+    lazy = false,
   },
   {
     "rust-lang/rust.vim",
@@ -48,7 +51,26 @@ local plugins = {
       table.insert(M.sources, {name = "crates"})
       return M
     end,
-  }
+  },
+  {
+    "christoomey/vim-tmux-navigator",
+    lazy = false,
+  },
+ {
+  "neovim/nvim-lspconfig",
+
+   dependencies = {
+     "jose-elias-alvarez/null-ls.nvim",
+      event = "VeryLazy",
+     config = function()
+       return require "custom.configs.null-ls"
+     end,
+   },
+   config = function()
+      require "plugins.configs.lspconfig"
+      require "custom.configs.lspconfig"
+   end,
+},
 }
 return plugins
 
