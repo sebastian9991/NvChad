@@ -3,11 +3,28 @@ local capabilities = require("plugins.configs.lspconfig").capabilities
 local lspconfig = require("lspconfig")
 local util = require "lspconfig/util"
 
+--Python
+lspconfig.pyright.setup({
+  on_attach = on_attach, 
+  capabilities = capabilities, 
+  filetypes = {"python"}
+})
 
 
 
+--Typesript/javascrip
+lspconfig.tsserver.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  init_options = {
+    preferences = {
+      disableSuggestions = true,
+    }
+  }
+}
 
 
+--Rust:
 lspconfig.clangd.setup {
   on_attach = function(client, bufnr)
     client.server_capabilities.signatureHelpProvider = false
